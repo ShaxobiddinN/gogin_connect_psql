@@ -32,6 +32,8 @@ func (stg Postgres) AddArticle(id string, entity models.CreateArticleModel) erro
 func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error) {
 
 	var a models.PackedArticleModel
+	var tempMiddlename *string
+
 	err := stg.db.QueryRow(`SELECT 
 	ar.id,
 	ar.title, 
@@ -41,6 +43,7 @@ func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error)
 	ar.deleted_at,
 	au.id, 
 	au.firstname, 
+	au.middlename,
 	au.lastname, 
 	au.created_at, 
 	au.updated_at, 
@@ -54,6 +57,7 @@ func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error)
 		&a.DeleteAt,
 		&a.Author.Id,
 		&a.Author.Firstname,
+		&tempMiddlename,
 		&a.Author.Lastname,
 		&a.Author.CreatedAt,
 		&a.Author.UpdateAt,
@@ -64,6 +68,11 @@ func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error)
 	if err != nil {
 		return a,err
 	}
+
+	if tempMiddlename != nil {
+		a.Author.Middlename = *tempMiddlename
+	} 
+
 	return a,nil
 }
 

@@ -10,25 +10,17 @@ func (stg Postgres) AddAuthor(id string, entity models.CreateAuthorModel) error 
 	
 	
 	_,err := stg.db.Exec(`INSERT INTO author 
-	(id,firstname, lastname) 
-	VALUES ($1, $2, $3)`, 
+	(id,firstname, middlename, lastname) 
+	VALUES ($1, $2, $3, $4)`, 
 	id,
 	entity.Firstname,
+	entity.Middlename,
 	entity.Lastname,
 )
 	if err != nil {
 		return err
 	}
 	
-/* 	var author models.Author
-
-	author.Id = id
-	author.Firstname=entity.Firstname
-	author.Lastname=entity.Lastname
-	author.CreatedAt = time.Now()
-
-	im.Db.InMemoryAuthorData = append(im.Db.InMemoryAuthorData, author) */
-
 	return nil
 }
 
@@ -38,6 +30,7 @@ func (stg Postgres) GetAuthorById(id string) (models.Author, error) {
 	err := stg.db.QueryRow(`SELECT 
 	id, 
 	firstname, 
+	middlename,
 	lastname, 
 	created_at, 
 	updated_at, 
@@ -46,6 +39,7 @@ func (stg Postgres) GetAuthorById(id string) (models.Author, error) {
 	WHERE id = $1`,id).Scan(
 		&a.Id,
 		&a.Firstname,
+		&a.Middlename,
 		&a.Lastname,
 		&a.CreatedAt,
 		&a.UpdateAt,
@@ -72,6 +66,7 @@ func (stg Postgres) GetAuthorList(offset,limit int,search string) (resp []models
 	rows, err := stg.db.Queryx(`SELECT 
 	id, 
 	firstname, 
+	middlename,
 	lastname,  
 	created_at, 
 	updated_at, 
@@ -91,6 +86,7 @@ func (stg Postgres) GetAuthorList(offset,limit int,search string) (resp []models
 		err := rows.Scan(
 			&a.Id,
 			&a.Firstname,
+			&a.Middlename,
 			&a.Lastname,
 			&a.CreatedAt,
 			&a.UpdateAt,
@@ -109,10 +105,12 @@ func (stg Postgres) UpdateAuthor(entity models.UpdateAuthorModel) error{
 	res, err := stg.db.NamedExec(`
 	UPDATE  author SET 
 		firstname=:f, 
+		middlename =: m,
 		lastname=:l,
 		updated_at=now() 
 		WHERE id=:i AND deleted_at IS NULL `, map[string]interface{}{
 		"f": entity.Firstname,
+		"m": entity.Middlename,
 		"l": entity.Lastname,
 		"i": entity.Id,
 	})
@@ -122,18 +120,7 @@ func (stg Postgres) UpdateAuthor(entity models.UpdateAuthorModel) error{
 	if n, _ := res.RowsAffected(); n > 0 {
 		return nil
 	}
-	/* for i, v := range im.Db.InMemoryAuthorData {
-		if v.Id == entity.Id && v.DeleteAt==nil{
-			v.Firstname = entity.Firstname
-			v.Lastname = entity.Lastname
 
-			t := time.Now()
-			v.UpdateAt = &t
-			im.Db.InMemoryAuthorData[i] = v
-			
-			return nil
-		}
-	} */
 	return errors.New("author not found")
 }
 
@@ -150,16 +137,6 @@ func (stg Postgres) RemoveAuthor(id string) error{
 	if n>0 {
 		return nil
 	}
-	/* for i, v := range im.Db.InMemoryAuthorData {
-		if v.Id == id && v.DeleteAt==nil {
-			if v.DeleteAt!=nil{
-				return errors.New("already deleted")
-			}
-			t:=time.Now()
-			v.DeleteAt=&t
-			im.Db.InMemoryAuthorData[i] = v
-			return nil
-		}
-	} */
+	
 	return errors.New("author not found or already deleted")
 }
