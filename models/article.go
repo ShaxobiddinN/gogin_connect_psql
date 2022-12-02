@@ -3,10 +3,6 @@ package models
 import "time"
 
 
-type Person struct {
-	Firstname string  `json:"firstname" binding:"required" minLength:"2" maxLength:"50" example:"John"`
-	Lastname  string  `json:"lastname" binding:"required" minLength:"2" maxLength:"50" example:"Doe"`
-}
 
 // Content ...
 type Content struct {
@@ -34,7 +30,7 @@ type CreateArticleModel struct {
 type PackedArticleModel struct {
 	ID        string `json:"id"`
 	Content          
-	Author    Author `json:"author"`
+	GetAuthor    GetAuthor `json:"author"`  //Author    Author `json:"author"` bolgan
 	CreatedAt time.Time `json:"created_at"`
 	UpdateAt *time.Time `json:"updated_at"`
 	DeleteAt *time.Time `json:"d_at"`

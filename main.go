@@ -14,9 +14,9 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 )
 
-// @contact.name   API Article
-// @contact.url    http://www.johndoe.com
-// @contact.email  johndoe@swagger.io
+// @contact.name  API Article
+// @contact.url   http://www.johndoe.com
+// @contact.email johndoe@swagger.io
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {

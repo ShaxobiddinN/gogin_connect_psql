@@ -587,27 +587,21 @@ const docTemplate = `{
         "models.Author": {
             "type": "object",
             "required": [
-                "firstname",
-                "lastname"
+                "fullname"
             ],
             "properties": {
                 "created_at": {
                     "type": "string"
                 },
-                "firstname": {
+                "fullname": {
+                    "description": "Firstname string  ` + "`" + `json:\"firstname\" binding:\"required\" minLength:\"2\" maxLength:\"50\" example:\"John\"` + "`" + `\nLastname  string  ` + "`" + `json:\"lastname\" binding:\"required\" minLength:\"2\" maxLength:\"50\" example:\"Doe\"` + "`" + `\nMiddlename  string  ` + "`" + `json:\"middlename\" example:\"O\" ` + "`" + `",
                     "type": "string",
-                    "maxLength": 50,
+                    "maxLength": 255,
                     "minLength": 2,
-                    "example": "John"
+                    "example": "John Doe"
                 },
                 "id": {
                     "type": "string"
-                },
-                "lastname": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "minLength": 2,
-                    "example": "Doe"
                 },
                 "updated_at": {
                     "type": "string"
@@ -636,21 +630,37 @@ const docTemplate = `{
         "models.CreateAuthorModel": {
             "type": "object",
             "required": [
-                "firstname",
-                "lastname"
+                "fullname"
             ],
             "properties": {
-                "firstname": {
+                "fullname": {
                     "type": "string",
                     "maxLength": 50,
                     "minLength": 2,
-                    "example": "John"
+                    "example": "John Doe Oe"
+                }
+            }
+        },
+        "models.GetAuthor": {
+            "type": "object",
+            "required": [
+                "fullname"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
                 },
-                "lastname": {
+                "fullname": {
                     "type": "string",
-                    "maxLength": 50,
+                    "maxLength": 255,
                     "minLength": 2,
-                    "example": "Doe"
+                    "example": "John Doe"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         },
@@ -679,7 +689,8 @@ const docTemplate = `{
             ],
             "properties": {
                 "author": {
-                    "$ref": "#/definitions/models.Author"
+                    "description": "Author    Author ` + "`" + `json:\"author\"` + "`" + ` bolgan",
+                    "$ref": "#/definitions/models.GetAuthor"
                 },
                 "body": {
                     "type": "string"
@@ -723,24 +734,17 @@ const docTemplate = `{
         "models.UpdateAuthorModel": {
             "type": "object",
             "required": [
-                "firstname",
-                "lastname"
+                "fullname"
             ],
             "properties": {
-                "firstname": {
+                "fullname": {
                     "type": "string",
                     "maxLength": 50,
                     "minLength": 2,
-                    "example": "John"
+                    "example": "John Doe Oe"
                 },
                 "id": {
                     "type": "string"
-                },
-                "lastname": {
-                    "type": "string",
-                    "maxLength": 50,
-                    "minLength": 2,
-                    "example": "Doe"
                 }
             }
         }

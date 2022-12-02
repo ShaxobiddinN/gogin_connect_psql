@@ -32,7 +32,7 @@ func (stg Postgres) AddArticle(id string, entity models.CreateArticleModel) erro
 func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error) {
 
 	var a models.PackedArticleModel
-	var tempMiddlename *string
+	// var tempMiddlename *string
 
 	err := stg.db.QueryRow(`SELECT 
 	ar.id,
@@ -42,9 +42,7 @@ func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error)
 	ar.updated_at, 
 	ar.deleted_at,
 	au.id, 
-	au.firstname, 
-	au.middlename,
-	au.lastname, 
+	au.fullname,
 	au.created_at, 
 	au.updated_at, 
 	au.deleted_at
@@ -55,13 +53,14 @@ func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error)
 		&a.CreatedAt,
 		&a.UpdateAt,
 		&a.DeleteAt,
-		&a.Author.Id,
-		&a.Author.Firstname,
-		&tempMiddlename,
-		&a.Author.Lastname,
-		&a.Author.CreatedAt,
-		&a.Author.UpdateAt,
-		&a.Author.DeleteAt,
+		&a.GetAuthor.Id,
+		// &a.Author.Firstname,
+		// &tempMiddlename,
+		// &a.Author.Lastname,
+		&a.GetAuthor.Fullname,
+		&a.GetAuthor.CreatedAt,
+		&a.GetAuthor.UpdateAt,
+		&a.GetAuthor.DeleteAt,
 
 
 	)
@@ -69,9 +68,9 @@ func (stg Postgres) GetArticleById(id string) (models.PackedArticleModel, error)
 		return a,err
 	}
 
-	if tempMiddlename != nil {
-		a.Author.Middlename = *tempMiddlename
-	} 
+	// if tempMiddlename != nil {
+	// 	a.Author.Middlename = *tempMiddlename
+	// } 
 
 	return a,nil
 }
@@ -153,14 +152,6 @@ func (stg Postgres) RemoveArticle(id string) error {
 		return nil
 	}
 
-	/* for i, v := range im.Db.InMemoryArticleData {
-		if v.ID == id && v.DeleteAt == nil {
-			t := time.Now()
-			v.DeleteAt = &t
-			im.Db.InMemoryArticleData[i] = v
-			return nil
-		}
-	} */
 	return errors.New("article not found or already deleted")
 
 }

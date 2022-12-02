@@ -22,23 +22,21 @@ definitions:
     properties:
       created_at:
         type: string
-      firstname:
-        example: John
-        maxLength: 50
+      fullname:
+        description: |-
+          Firstname string  `json:"firstname" binding:"required" minLength:"2" maxLength:"50" example:"John"`
+          Lastname  string  `json:"lastname" binding:"required" minLength:"2" maxLength:"50" example:"Doe"`
+          Middlename  string  `json:"middlename" example:"O" `
+        example: John Doe
+        maxLength: 255
         minLength: 2
         type: string
       id:
         type: string
-      lastname:
-        example: Doe
-        maxLength: 50
-        minLength: 2
-        type: string
       updated_at:
         type: string
     required:
-    - firstname
-    - lastname
+    - fullname
     type: object
   models.CreateArticleModel:
     properties:
@@ -55,19 +53,29 @@ definitions:
     type: object
   models.CreateAuthorModel:
     properties:
-      firstname:
-        example: John
-        maxLength: 50
-        minLength: 2
-        type: string
-      lastname:
-        example: Doe
+      fullname:
+        example: John Doe Oe
         maxLength: 50
         minLength: 2
         type: string
     required:
-    - firstname
-    - lastname
+    - fullname
+    type: object
+  models.GetAuthor:
+    properties:
+      created_at:
+        type: string
+      fullname:
+        example: John Doe
+        maxLength: 255
+        minLength: 2
+        type: string
+      id:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - fullname
     type: object
   models.JSONErrorResponce:
     properties:
@@ -83,7 +91,8 @@ definitions:
   models.PackedArticleModel:
     properties:
       author:
-        $ref: '#/definitions/models.Author'
+        $ref: '#/definitions/models.GetAuthor'
+        description: Author    Author `json:"author"` bolgan
       body:
         type: string
       created_at:
@@ -115,21 +124,15 @@ definitions:
     type: object
   models.UpdateAuthorModel:
     properties:
-      firstname:
-        example: John
+      fullname:
+        example: John Doe Oe
         maxLength: 50
         minLength: 2
         type: string
       id:
         type: string
-      lastname:
-        example: Doe
-        maxLength: 50
-        minLength: 2
-        type: string
     required:
-    - firstname
-    - lastname
+    - fullname
     type: object
 info:
   contact:
