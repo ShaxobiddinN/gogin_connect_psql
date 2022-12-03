@@ -21,7 +21,7 @@ import (
 // @Success     201     {object} models.JSONResponse{data=models.Article}
 // @Failure     400     {object} models.JSONErrorResponce
 // @Router      /v1/article [post]
-func (h Handler) CreateArticle(c *gin.Context) {
+func (h handler) CreateArticle(c *gin.Context) {
 	var body models.CreateArticleModel
 
 	if err := c.ShouldBindJSON(&body); err != nil {
@@ -62,7 +62,7 @@ func (h Handler) CreateArticle(c *gin.Context) {
 // @Success     200 {object} models.JSONResponse{data=models.PackedArticleModel}
 // @Failure     400 {object} models.JSONErrorResponce
 // @Router      /v1/article/{id} [get]
-func (h Handler) GetArticleById(c *gin.Context) {
+func (h handler) GetArticleById(c *gin.Context) {
 
 	idStr := c.Param("id")
 
@@ -92,10 +92,10 @@ func (h Handler) GetArticleById(c *gin.Context) {
 // @Param       search query    string  false "smth"
 // @Success     200    {object} models.JSONResponse{data=[]models.Article}
 // @Router      /v1/article [get]
-func (h Handler) GetArticleList(c *gin.Context) {
+func (h handler) GetArticleList(c *gin.Context) {
 
-	offsetStr := c.DefaultQuery("offset", "0")
-	limitStr := c.DefaultQuery("limit", "10")
+	offsetStr := c.DefaultQuery("offset",h.Cfg.DefaultOffset)
+	limitStr := c.DefaultQuery("limit",h.Cfg.DefaultLimit)
 	searchStr := c.DefaultQuery("search", "")
 
 	offset, err := strconv.Atoi(offsetStr)
@@ -138,7 +138,7 @@ func (h Handler) GetArticleList(c *gin.Context) {
 // @Success     200     {object} models.JSONResponse{data=[]models.Article}
 // @Failure     400     {object} models.JSONErrorResponce
 // @Router      /v1/article [put]
-func (h Handler) UpdateArticle(c *gin.Context) {
+func (h handler) UpdateArticle(c *gin.Context) {
 
 	var body models.UpdateArticleModel
 	if err := c.ShouldBindJSON(&body); err != nil {
@@ -179,7 +179,7 @@ func (h Handler) UpdateArticle(c *gin.Context) {
 // @Success     200 {object} models.JSONResponse{data=models.PackedArticleModel}
 // @Failure     400 {object} models.JSONErrorResponce
 // @Router      /v1/article/{id} [delete]
-func (h Handler) DeleteArticle(c *gin.Context) {
+func (h handler) DeleteArticle(c *gin.Context) {
 
 	idStr := c.Param("id")
 

@@ -10,11 +10,7 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {
-            "name": "API Article",
-            "url": "http://www.johndoe.com",
-            "email": "johndoe@swagger.io"
-        },
+        "contact": {},
         "license": {
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -594,7 +590,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "fullname": {
-                    "description": "Firstname string  ` + "`" + `json:\"firstname\" binding:\"required\" minLength:\"2\" maxLength:\"50\" example:\"John\"` + "`" + `\nLastname  string  ` + "`" + `json:\"lastname\" binding:\"required\" minLength:\"2\" maxLength:\"50\" example:\"Doe\"` + "`" + `\nMiddlename  string  ` + "`" + `json:\"middlename\" example:\"O\" ` + "`" + `",
                     "type": "string",
                     "maxLength": 255,
                     "minLength": 2,

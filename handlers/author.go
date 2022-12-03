@@ -23,7 +23,7 @@ import (
 // @Failure     400    {object} models.JSONErrorResponce
 // @Failure     500    {object} models.JSONErrorResponce
 // @Router      /v1/author [post]
-func (h Handler) CreateAuthor(c *gin.Context) {
+func (h handler) CreateAuthor(c *gin.Context) {
 	var body models.CreateAuthorModel
 
 	if err := c.ShouldBindJSON(&body); err != nil {
@@ -64,7 +64,7 @@ func (h Handler) CreateAuthor(c *gin.Context) {
 // @Success     200 {object} models.JSONResponse{data=models.Author}
 // @Failure     400 {object} models.JSONErrorResponce
 // @Router      /v1/author/{id} [get]
-func (h Handler) GetAuthorById(c *gin.Context) {
+func (h handler) GetAuthorById(c *gin.Context) {
 
 	idStr := c.Param("id")
 
@@ -94,7 +94,7 @@ func (h Handler) GetAuthorById(c *gin.Context) {
 // @Failure     400    {object} models.JSONErrorResponce
 // @Success     200    {object} models.JSONResponse{data=[]models.Author}
 // @Router      /v1/author [get]
-func (h Handler) GetAuthorList(c *gin.Context) {
+func (h handler) GetAuthorList(c *gin.Context) {
 
 	offsetStr := c.DefaultQuery("offset", "0")
 	limitStr := c.DefaultQuery("limit", "10")
@@ -140,7 +140,7 @@ func (h Handler) GetAuthorList(c *gin.Context) {
 // @Success     200    {object} models.JSONResponse{data=[]models.Author}
 // @Failure     400    {object} models.JSONErrorResponce
 // @Router      /v1/author [put]
-func (h Handler) UpdateAuthor(c *gin.Context) {
+func (h handler) UpdateAuthor(c *gin.Context) {
 
 	var body models.UpdateAuthorModel
 	if err := c.ShouldBindJSON(&body); err != nil {
@@ -180,7 +180,7 @@ func (h Handler) UpdateAuthor(c *gin.Context) {
 // @Success     200 {object} models.JSONResponse{data=models.Author}
 // @Failure     400 {object} models.JSONErrorResponce
 // @Router      /v1/author/{id} [delete]
-func (h Handler) DeleteAuthor(c *gin.Context) {
+func (h handler) DeleteAuthor(c *gin.Context) {
 
 	idStr := c.Param("id")
 

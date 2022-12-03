@@ -23,10 +23,6 @@ definitions:
       created_at:
         type: string
       fullname:
-        description: |-
-          Firstname string  `json:"firstname" binding:"required" minLength:"2" maxLength:"50" example:"John"`
-          Lastname  string  `json:"lastname" binding:"required" minLength:"2" maxLength:"50" example:"Doe"`
-          Middlename  string  `json:"middlename" example:"O" `
         example: John Doe
         maxLength: 255
         minLength: 2
@@ -135,10 +131,7 @@ definitions:
     - fullname
     type: object
 info:
-  contact:
-    email: johndoe@swagger.io
-    name: API Article
-    url: http://www.johndoe.com
+  contact: {}
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
