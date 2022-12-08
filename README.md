@@ -13,6 +13,8 @@ Rest API article postgreSQL
 ![image](https://user-images.githubusercontent.com/95979719/206504427-555e2138-f466-4337-944c-49549d433a57.png)
 
 
+**Migrate DB:**
+
     migrate -path db/migration -database 'postgres://login:parol@localhost:5432/db_name?sslmode=disable' up
 
 
